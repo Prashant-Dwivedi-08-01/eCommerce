@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@1,600&display=swap" rel="stylesheet">
+  <style>
+    .grandFont {
+      font-family: 'Grandstander', cursive;
+    }
+
+    .searchBox {
+      width: 100px;
+      border: 1px solid #348d01;
+      border-radius: 7px;
+      padding: 5px;
+    }
+
+    .searchBox:focus {
+
+      width: 250px;
+      outline: none;
+      box-shadow: 0px 0px 6px 1px #75ff36
+    }
+
+
+    /* firstSection */
+    .firstSection {
+      background-color: #dbfff6;
+      height: 750px;
+    }
+
+
+    .cardContainer {
+      /* background-color: #BFBFBF; */
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding-left: 233px;
+      padding-right: 176px;
+    }
+
+    div.polaroid_big {
+      width: 284px;
+      padding: 10px 10px 20px 10px;
+      border: 1px solid #BFBFBF;
+      background-color: white;
+      box-shadow: 10px 10px 5px #aaaaaa;
+
+    }
+
+    div.polaroid_big:hover {
+      width: 300px;
+      padding: 10px 10px 20px 10px;
+      border: 1px solid #BFBFBF;
+      background-color: white;
+      box-shadow: 10px 10px 5px #aaaaaa;
+      animation-name: makeBig;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+
+    }
+
+
+    div.rotate {
+      float: left;
+      -ms-transform: rotate(var(--degree));
+      /* IE 9 */
+      -webkit-transform: rotate(var(--degree));
+      /* Safari */
+      transform: rotate(var(--degree));
+    }
+
+    /* Second Section */
+    .imageContainer {
+      position: relative;
+    }
+
+    .bottom-left {
+      position: absolute;
+      bottom: 8px;
+      left: 75px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ffe479;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .ml2 {
+      font-weight: 900;
+      font-size: 2.5em;
+    }
+
+    .ml2 .letter {
+      display: inline-block;
+      line-height: 1em;
+    }
+  </style>
+  <title>Hello, world!</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-light bg-white absolute-top">
+    <div class="container">
+
+      <button class="navbar-toggler order-2 order-md-1" type="button" data-toggle="collapse"
+        data-target=".navbar-collapse" aria-controls="navbar-left navbar-right" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse order-3 order-md-2" id="navbar-left">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">Home</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="home-onecolumn.html">One column</a>
+              <a class="dropdown-item" href="home-twocolumn.html">Two column</a>
+              <a class="dropdown-item" href="home-threecolumn.html">Three column</a>
+              <a class="dropdown-item" href="home-fourcolumn.html">Four column</a>
+              <a class="dropdown-item" href="home-featured.html">Featured posts</a>
+              <a class="dropdown-item" href="home-fullwidth.html">Full width</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">Posts</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown02">
+              <a class="dropdown-item" href="post-image.html">Image</a>
+              <a class="dropdown-item" href="post-video.html">Video</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">Components</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown03">
+              <a class="dropdown-item" href="doc-alerts.html">Alerts</a>
+              <a class="dropdown-item" href="doc-buttons.html">Buttons</a>
+              <a class="dropdown-item" href="doc-cards.html">Cards</a>
+              <a class="dropdown-item" href="doc-forms.html">Forms</a>
+              <a class="dropdown-item" href="doc-icons.html">Icons</a>
+              <a class="dropdown-item" href="doc-pagination.html">Pagination</a>
+              <a class="dropdown-item" href="doc-tables.html">Tables</a>
+              <a class="dropdown-item" href="doc-typography.html">Typography</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <a class="navbar-brand mx-auto order-1 order-md-3 grandFont" href="index.html">Prashant</a>
+
+      <div class="collapse navbar-collapse order-4 order-md-4" id="navbar-right">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="page-about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="page-contact.html">Contact</a>
+          </li>
+        </ul>
+        <form class="form-inline" role="search">
+          <input class="searchBox mr-sm-2" type="text" title="Enter search query here.." placeholder="Search.."
+            aria-label="Search">
+        </form>
+      </div>
+    </div>
+  </nav>
+  </header>
+  <!-- <hr> -->
+
+  {% load static %}
+  <!-- <a href="{%static 'blog/myBlog.txt'%}">Click Me to see the Blog</a> -->
+  <div class="firstSection">
+    <h1 class="center ml2" style="margin-bottom:30px">Travel with Me...</h1>
+    <div class="cardContainer">
+      <div class="polaroid_big rotate" style="--degree: 7deg;">
+        <img src="/media/blog/images/p1.jpg" alt="Pulpit rock" style="width: 265px; height: 213px;">
+        <p class="caption">The pulpit rock in Lysefjorden, Norway.</p>
+      </div>
+      <div class="polaroid_big rotate" style="--degree: -7deg;">
+        <img src="/media/blog/images/p2.jpg" alt="Monterosso al Mare" style="width: 265px; height: 213px;">
+        <p class="caption">Monterosso al Mare. One of the five villages in Cinque Terre, Italy.</p>
+      </div>
+      <div class="polaroid_big rotate" style="--degree: 9deg; width: 260px; height: 242px;">
+        <img src="/media/blog/images/p3.jpg" alt="Monterosso al Mare" style="width: 239px; height: 172px;">
+        <p class="caption">Monterosso al Mare. One of the five villages in Cinque Terre, Italy.</p>
+      </div>
+      <div class="polaroid_big rotate" style="--degree: -10deg;">
+        <img src="/media/blog/images/p4.jpg" alt="Monterosso al Mare" style="width: 265px; height: 213px;">
+        <p class="caption">Monterosso al Mare. One of the five villages in Cinque Terre, Italy.</p>
+      </div>
+      <div class="polaroid_big rotate" style="--degree: 9deg; width: 250px; height: 213px;">
+        <img src="/media/blog/images/p5.jpg" alt="Monterosso al Mare" style="width: 230px; height: 124px;">
+        <p class="caption">Monterosso al Mare. One of the five villages in Cinque Terre, Italy.</p>
+      </div>
+      <div class="polaroid_big rotate" style="--degree: -9deg;">
+        <img src="/media/blog/images/p6.jpg" alt="Monterosso al Mare" style="width: 265px; height: 213px;">
+        <p class="caption">Monterosso al Mare. One of the five villages in Cinque Terre, Italy.</p>
+      </div>
+    </div>
+  </div>
+
+<div class="container-fluid imageContainer mt-3">
+
+  <div class="popularPost">
+    <h3 class="center grandFont">Popular Post</h3>
+  </div>
+
+  <div class="row">
+      <!-- FIRST COULUMN -->
+        <div class="col-4">
+          <div class="card bg-dark text-white">
+            <img src="/media/blog/images/lake.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text">Last updated 3 mins ago</p>
+            </div>
+          </div>
+
+        </div>
+
+      <!-- SECOND COLUMN -->
+        <div class="col-8">
+
+          <!-- FIRST ROW -->
+          <div class="row">
+            <!-- FIRST COLUMN -->
+            <div class="col-8" ">
+              <div class=" card bg-dark text-white">
+              <img src="/media/blog/images/p3.jpg" class="card-img" alt="..." style="height:570px;" >
+              <div class="card-img-overlay">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                  additional content. This content is a little bit longer.</p>
+                <p class="card-text">Last updated 3 mins ago</p>
+              </div>
+            </div>
+            </div>
+            <!-- SECOND COULUMN -->
+            <div class="col-4" ">
+              <!-- FIRST ROW -->
+              <div class="row">
+              <div class=" card bg-dark text-white">
+            <img src="/media/blog/images/p2.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                additional content. This content is a little bit longer.</p>
+              <p class="card-text">Last updated 3 mins ago</p>
+            </div>
+          </div>
+              </div>
+              <!-- SECOND ROW -->
+              <div class="row my-3">
+              <div class=" card bg-dark text-white">
+            <img src="/media/blog/images/p12_potrait.jpg" class="card-img" alt="..." style="height: 352px;">
+            <div class="card-img-overlay">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                additional content. This content is a little bit longer.</p>
+              <p class="card-text">Last updated 3 mins ago</p>
+            </div>
+          </div>
+
+               </div>
+            </div>
+
+          </div>
+          
+          <!-- SECOND ROW -->
+          <div class="row mt-2">
+          <div class="col-4">
+
+        <div class=" card bg-dark text-white">
+         <img src="/media/blog/images/p7.jpg" class="card-img" alt="..." style="height: 177px;">
+         <div class="card-img-overlay">
+           <h5 class="card-title">Card title</h5>
+           <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+             additional content. This content is a little bit longer.</p>
+           <p class="card-text">Last updated 3 mins ago</p>
+         </div>
+       </div>
+
+          </div>
+          <div class="col-4">
+           
+               <div class=" card bg-dark text-white">
+       <img src="/media/blog/images/p8.jpg" class="card-img" alt="..." style="height: 177px;">
+       <div class="card-img-overlay">
+         <h5 class="card-title">Card title</h5>
+         <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+           additional content. This content is a little bit longer.</p>
+         <p class="card-text">Last updated 3 mins ago</p>
+       </div>
+     </div>
+
+          </div>
+          <div class="col-4">
+            
+               <div class=" card bg-dark text-white">
+     <img src="/media/blog/images/p9.jpg" class="card-img" alt="..." style="height: 177px;">
+     <div class="card-img-overlay">
+       <h5 class="card-title">Card title</h5>
+       <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+         additional content. This content is a little bit longer.</p>
+       <p class="card-text">Last updated 3 mins ago</p>
+     </div>
+
+   </div>
+           </div>
+          </div>
+        </div>
+
+
+  </div>
+</div>
+
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+  <script src="js/app.js"></script>
+  <!-- Text Animation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+  <script>
+    // Wrap every letter in a span
+    var textWrapper = document.querySelector('.ml2');
+    textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+    anime.timeline({ loop: true })
+      .add({
+        targets: '.ml2 .letter',
+        scale: [4, 1],
+        opacity: [0, 1],
+        translateZ: 0,
+        easing: "easeOutExpo",
+        duration: 950,
+        delay: (el, i) => 70 * i
+      }).add({
+        targets: '.ml2',
+        opacity: 0,
+        duration: 1000,
+        easing: "easeOutExpo",
+        delay: 1000
+      });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+{% extends 'shop/basic.html' %}
+{% block title %}Checkout{% endblock %}
+{% block css %}
+<style>
+    #qyt {
+        margin-left: auto;
+        margin-right: 10px;
+    }
+
+    .complete-cart-btn {
+        float: right;
+        margin: 10px 0px;
+    }
+</style>
+{% endblock %}
+{% block body %}
+{% load static %}
+<div class="container my-3">
+    <h3 id="heading">Complete Cart View</h3>
+    <ul class="list-group" id="items">
+
+    </ul>
+    <a href="/shop/order/"><button class="btn btn-success complete-cart-btn" onclick="sendOrder('multiple')">Order Complete Cart</button></a>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    if (localStorage.getItem('cart') == null) {
+        var cart = {};
+    }
+    else {
+        var cart = JSON.parse(localStorage.getItem('cart'));
+        document.getElementById('cart').innerHTML = Object.keys(cart).length;
+    }
+    console.log(cart);
+
+    if (Object.keys(cart).length == 0) {
+        let mystr = `<h5>Your Cart is empty! Please add some items before checking out</h5>`
+        $('#items').append(mystr); //Short way by jQuery
+    }
+    else {
+
+        //checking and noting the id from databse of our products in cart and then calling the order page with id in url
+        for (var item in cart) {
+            var qyt = cart[item][0];
+            var name = cart[item][1];
+
+     
+        let mystr = `<li class="list-group-item d-flex justify-content-between align-items-center" id="${item}">
+                            ${name}
+                            <span class="badge badge-primary badge-pill" id="qyt">${qyt}</span>
+                            <a href="/shop/order/"><button class="btn btn-outline-success" onclick="sendOrder('single','${item}')">Place Order</button></a>
+                            <button class="btn btn-outline-danger mx-2" onclick="removeItem('${item}')">Remove</button>
+                        </li>`
+        $('#items').append(mystr); //Short way by jQuery
+    }
+    }
+
+    function removeItem(item) {
+        document.getElementById(item).remove();
+        delete cart[item];
+        console.log(cart);
+        localStorage.setItem("cart", JSON.stringify(cart))
+    }
+
+    function sendOrder(type, value =""){
+        order = {}
+        if(type == 'single'){
+            order[value] = [cart[value][0], cart[value][1]] //qyt, name
+            localStorage.setItem('order',JSON.stringify(order));
+        }
+        else if(type == 'multiple'){
+            order = cart
+            localStorage.setItem('order',JSON.stringify(order));
+        }
+    }
+
+</script>
+{% endblock %}

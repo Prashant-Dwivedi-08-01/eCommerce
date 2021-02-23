@@ -1,0 +1,290 @@
+{% extends 'shop/basic.html' %}
+{% block title %}Order Page{% endblock %}
+{% block css %}
+<style>
+    body {
+        background-color: rgb(240, 240, 240);
+    }
+
+    .grid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .row {
+        margin: 2px;
+    }
+
+    .fields {
+        /* border: 2px solid black; */
+        background-color: #ffffff;
+        margin: 16px;
+    }
+
+    .field_heading {
+        background-color: rgb(211 239 255);
+        width: 100%;
+        padding: 5px;
+    }
+
+    .form-row {
+        padding: 5px;
+    }
+
+    .item-image {
+        height: 166px;
+        width: 116px;
+    }
+
+    .item-image img {
+        height: 92%;
+        width: 75%;
+    }
+
+    .para {
+        display: inline-block;
+    }
+
+    .spanValue {
+        position: relative;
+        float: right;
+    }
+
+    .priceDetails {
+        width: 392px;
+    }
+
+    .f-top {
+        position: fixed;
+        top: 64px;
+        right: 6px;
+        z-index: 1030;
+    }
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        <!--style="border: none;"-->
+        <div class="col-8 p-0">
+            <div class="row fields" id="personal">
+                <h5 class="field_heading">Personal Details</h5>
+                <form action="/shop/order/" method="POST">{% csrf_token %}
+                    <input type="hidden" name="itemsJson" id="itemsJson">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Name</label>
+                            <input type="text" class="form-control" name="name" id="validationDefault01" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Email</label>
+                            <input type="email" class="form-control" name="email" id="validationDefault02" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Phone</label>
+                            <input type="text" class="form-control" name="phone" id="validationDefault02" required>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="row fields" id="address">
+                <h5 class="field_heading">Delivery address</h5>
+                <div class="form-row">
+                    <div class="col-12 mb-3">
+                        <label for="validationDefault03">Address</label>
+                        <input type="text" class="form-control" name="address" id="validationDefault03"
+                            placeholder="House, street, locality, etc." required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="validationDefault03">City</label>
+                        <input type="text" class="form-control" name="city" id="validationDefault03" required>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="validationDefault04">State</label>
+                        <select class="custom-select" id="validationDefault04" name="state" required>
+                            <option selected disabled value="">States</option>
+                            <option>Maharastra</option>
+                            <option>Andhra Pradesh</option>
+                            <option>Arunachal Pradesh</option>
+                            <option>Assam</option>
+                            <option>Bihar</option>
+                            <option>Chhattisgarh</option>
+                            <option>Goa</option>
+                            <option>Gujarat</option>
+                            <option>Haryana</option>
+                            <option>Himachal Pradesh</option>
+                            <option>Jharkhand</option>
+                            <option>Karnataka</option>
+                            <option>Kerala</option>
+                            <option>Madhya Pradesh</option>
+                            <option>Maharashtra</option>
+                            <option>Manipur</option>
+                            <option>Meghalaya</option>
+                            <option>Mizoram</option>
+                            <option>Nagaland</option>
+                            <option>Odisha</option>
+                            <option>Punjab</option>
+                            <option>Rajasthan</option>
+                            <option>Sikkim</option>
+                            <option>Tamil Nadu</option>
+                            <option>Telangana</option>
+                            <option>Tripura</option>
+                            <option>Uttarakhand</option>
+                            <option>Uttar Pradesh</option>
+                            <option>West Bengal</option>
+                            <option selected disabled value="">Union Terrotories</option>
+                            <option>Andaman and Nicobar Islands</option>
+                            <option>Chandigarh</option>
+                            <option>Dadra and Nagar Haveli and</option>
+                            <option>Daman & Diu</option>
+                            <option>The Government of NCT of Delhi</option>
+                            <option>Jammu & Kashmir</option>
+                            <option>Ladakh</option>
+                            <option>Lakshadweep</option>
+                            <option>Puducherry</option>
+
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="validationDefault05">Zip</label>
+                        <input type="text" class="form-control" name="zip_code" id="validationDefault05" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row fields" id="order">
+                <h5 class="field_heading">Order Summary</h5>
+                <ol id="orderSummary" style="width: 100%;">
+                    <!-- <li>
+                        <div class="row">
+                            <div class="col-4">IMage</div>
+                            <div class="col-8">
+                                <b>Name</b><br>
+                                <span>Rs Price</span>
+                            </div>
+                        </div>
+                    </li> -->
+                </ol>
+
+            </div>
+
+            <div class="row fields" id="payment">
+                <h5 class="field_heading">Payment</h5>
+                <div class="form-check col-12">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                        value="option1" checked>
+                    <label class="form-check-label" for="exampleRadios1">
+                        COD
+                    </label>
+                </div>
+                <div class="form-check col-12">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                        value="option2">
+                    <label class="form-check-label" for="exampleRadios2">
+                        Card
+                    </label>
+                </div>
+                <div class="form-group col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="invalidCheck2" required>
+                        <label class="form-check-label" for="invalidCheck2">
+                            I confirm the Order
+                        </label>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Place Order</button>
+                </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="col-4 p-0 f-top">
+            <div class="row fields" id="priceDetails">
+                <h5 class="field_heading">Price Details</h5>
+                <div class="p-2">
+                    <div class="priceDetails">
+                        <p class="para">Order Total</p>
+                        <span id="orderTotal" class='spanValue'> </span>
+                    </div>
+                    <div class="priceDetails">
+                        <p class="para">Delivery Charges</p>
+                        <span id="deliveryCharge" class='spanValue'></span>
+                    </div>
+                    <div class="_3xFQAD">
+                        <div class="priceDetails">
+                            <p class="para">Amount Payable</p>
+                            <span id="amountPayable" class='spanValue'></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    if (localStorage.getItem('order') == null) {
+        console.log('No order');
+    }
+    else {
+        var order = JSON.parse(localStorage.getItem('order'));
+    }
+    var totalPrice = 0;
+    for (var item in order) {
+        var name = order[item][1]
+        var qyt = order[item][0]
+        {% for product, range, nSlides in allProds %}
+          {% for i in product %}
+                if ('{{i.product_name}}' == name) {
+                    //   var id = {{i.id}}
+                    var p_image = "{{i.image}}"
+                    var p_name = "{{i.product_name}}"
+                    var p_price = "{{i.price}}"
+                    totalPrice = totalPrice + {{i.price}}*qyt
+                let mystr = `<li>
+                                <div class="row">
+                                    <div class="col-4 item-image"><img src='/media/${p_image}' class="card-img-top " alt="..."></div>
+                                    <div class="col-8">
+                                        <b>${p_name}</b><br>
+                                        <span>Rs ${p_price}</span><br>
+                                        <span> Quantity: ${qyt}</span>
+                                    </div>
+                                </div>
+                            </li> `
+                $('#orderSummary').append(mystr);
+
+            }
+         {% endfor %}
+    {% endfor %}
+    
+}
+    document.getElementById("orderTotal").innerHTML = `Rs. ${totalPrice}`
+    if (totalPrice >= 499)
+        var delivery = 0
+    else
+        var delivery = 50
+    document.getElementById("deliveryCharge").innerHTML = `Rs. ${delivery}`
+    document.getElementById("amountPayable").innerHTML = `Rs. ${delivery + totalPrice}`
+    console.log(totalPrice);
+    $('#itemsJson').val(JSON.stringify(order));
+    {% if thank %}
+    alert('Thanks for ordering with us. Your order is is {{id}}. Use it to track your order using our order tracker');
+    var cart = JSON.parse(localStorage.getItem('cart'))
+    for (var item in order) {
+        delete cart[item];
+    }
+    localStorage.setItem("cart", JSON.stringify(cart))
+    localStorage.removeItem('order')
+    document.location = "/shop";
+    {% endif %}
+
+</script>
+{% endblock %}

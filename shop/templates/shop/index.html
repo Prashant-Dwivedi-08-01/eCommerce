@@ -1,0 +1,250 @@
+{% extends 'shop/basic.html' %}
+
+<!-- TITLE -->
+{% block title %} Home {% endblock %}
+
+<!-- CSS -->
+{% block css %}
+<style>
+  .col-md-3 {
+    display: inline-block;
+    margin-left: -4px;
+  }
+
+.carousel-indicators li {
+    background-color: rgb(192, 192, 243);
+  }
+  .carousel-indicators .active {
+    background-color: rgb(3, 3, 148);
+  }
+
+  .col-md-3 img {
+    width: 47%;
+    height: 165px;
+  }
+
+  body .carousel-indicators {
+    bottom: -40px;
+  }
+
+  body .carousel-control-prev-icon,
+  body .carousel-control-next-icon {
+    background-color: blue;
+  }
+
+  body .no-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .carousel-control-next,
+  .carousel-control-prev {
+    top: auto;
+    bottom: auto;
+    padding-top: 142px;
+  }
+</style>
+{% endblock %}
+
+
+<!-- BODY -->
+{% block body %}
+
+{% load static %}
+
+<div class="container">
+  <!-- Entire carousel is inside this div with class carousel slide -->
+  <!-- SLIDE SHOW STARTS HERE -->
+  {% for product, range, nSlides in allProds %}
+  <!--Loop over each slide show-->
+  <h4 class="my-4">Flash sale on {{product.0.category}}-Recommended for you</h4>
+  <div class="row">
+    <div id="demo{{forloop.counter}}" class="col carousel slide my-3" data-ride="carousel">
+
+      <!-- Declaring the Number of Slides[Indicators] { 3 here} -->
+      <ul class="carousel-indicators">
+        <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
+        {% for i in range%}
+        <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to={{i}}></li>
+        {% endfor %}
+      </ul>
+
+      <div class="container carousel-inner no-padding">
+
+        <!-- Each slide Contains 4 cards taking the space of 3 columns so it completes the grid 4x3=12 -->
+        <!-- Slide no 1 -->
+        <!-- Card1 -->
+
+        <div class="carousel-item active">
+          <!-- Product Cards-->
+          {% for i in product %}
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="card align-items-center" style="width: 18rem;">
+              <img src='/media/{{i.image}}' class="card-img-top" alt="...">
+              <div class="card-body">
+                <h6 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h6>
+                <p class="card-text" data-toggle="popover" title="" data-placement="bottom" data-content="{{i.desc}}"
+                  data-trigger="hover">{{i.desc|slice:"0:53"}}...</p>
+                <span id="divpr{{i.id}}" class="divpr">
+                  <button id="pr{{i.id}}" class="btn btn-primary cart" onclick="giveId(this.id, '{{i.product_name}}')">Add to Cart</button>
+                </span>
+                <a href="/shop/products/{{i.id}}"><button id="qv{{i.id}}"
+                    class="btn btn-primary cart">QuickView</button></a>
+              </div>
+            </div>
+          </div>
+          {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+          <!--Here we check forloop.last because we dont want to add a carousel slide when we are on last product-->
+        </div>
+        <!--Close Previous Carousel Item-->
+        <div class="carousel-item">
+          <!--  and start new carousle div which means new slide-->
+          {% endif %}
+
+          {% endfor %}
+        </div>
+        <!--Closing div for carousel item when if block not ran-->
+
+      </div>
+      <!--Closing the entire Slide Show div "container carousel-inner no-padding"-->
+
+    </div>
+    <!--Demo id div closed here-->
+
+
+    <!-- left and right controls for the slide -->
+    <a class="carousel-control-prev" href="#demo{{forloop.counter}}" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo{{forloop.counter}}" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+    <!-- <a href="/shop/checkout"><button class="btn btn-success">Checkout</button></a>
+    <button class="btn btn-outline-danger" onclick="clearCart()">Clear Cart</button> -->
+  </div>
+  {% endfor %}
+
+</div>
+
+<!--Main Container Closed Here-->
+<!-- <button id = >Click me</button> -->
+{% endblock %}
+
+<!-- Javascript -->
+{% block js %}
+
+<script>
+
+  console.log("Working");
+  //  Loading the Cart from LocalStorage
+  if (localStorage.getItem('cart') == null) {
+    var cart = {};
+  }
+  else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    updateCart(cart);
+  }
+
+  // Updating the Cart when Add to Cart is Clicked for First time for any Product
+  function giveId(id, name) {
+    product_id = id; 
+    product_name = name;
+    // if (cart[product_id] != undefined) {
+    //   cart[product_id] = cart[product_id] + 1;
+    // }
+    // else {
+    //   cart[product_id] = 1;
+    // }
+    //Since this Function is ran when we have zero items for particular product thus we can skip the above code and write directly this
+    var qyt = 1;
+    cart[product_id] = [qyt,name];
+    updateCart(cart);
+  }
+
+
+  function updateCart(cart) {
+    for (var item in cart) {
+      if (cart[item][0] == 0) {
+        document.getElementById('div' + item).innerHTML = `<button id="${item}" class="btn btn-primary cart" onclick="giveId(this.id,'${cart[item][1]}')">Add to Cart</button>`
+        //remove this from local storage as this product(key has zero units)
+        delete cart[item];
+      }
+      else {
+        document.getElementById('div' + item).innerHTML = `<button id = 'minus${item}' class='btn btn-primary minus' onClick = "minusClicked(this.id)">-</button> 
+        <span id='val${item}'>${cart[item][0]} </span>
+        <button id='plus${item}' class='btn btn-primary plus' onClick = "plusClicked(this.id)" >+</button>`;
+      }
+    }
+    localStorage.setItem("cart", JSON.stringify(cart))
+    console.log(cart);
+    key = Object.keys(cart)
+    total = 0;
+    for (let i = 0; i < key.length; i++) {
+      total = total + cart[key[i]][0];   // here we are writing this code because we need no of units of each products(or keys in dictionary) and not only the number of products(or keys in cart)
+    }
+    document.getElementById('cart').innerHTML = total
+    updatePopOver(cart);
+
+  }
+
+   function clearCart(){
+    cart = JSON.parse(localStorage.getItem('cart'));
+    for(var item in cart){
+      document.getElementById('div' + item).innerHTML = `<button id="${item}" class="btn btn-primary cart" onclick="giveId(this.id)">Add to Cart</button>`     
+    }
+    cart = {};
+    localStorage.clear();
+    updateCart(cart)
+   }
+  // If plus or minus button is clicked, change the cart as well as the display value
+  // Minus
+  function minusClicked(button_id) {
+    // id is "minuspr7"....eg
+    item_id = button_id.slice(5,);
+    cart[item_id][0] = cart[item_id][0] - 1;
+    cart[item_id][0] = Math.max(0, cart[item_id][0]);
+    document.getElementById('val' + item_id).innerHTML = cart[item_id][0];
+    updateCart(cart);
+  }
+  
+  // Plus
+  function plusClicked(button_id) {
+    item_id = button_id.slice(4,);
+    cart[item_id][0] = cart[item_id][0] + 1;
+    document.getElementById('val' + item_id).innerHTML = cart[item_id][0];
+    updateCart(cart);
+  }
+
+  //Activating the Popover of cart using Jquery from bootstrap website
+  $('#popCart').popover();
+  $('.popover-dismiss').popover({
+    trigger: 'focus'
+  })
+
+  updatePopOver(cart);
+  //Showing Items in PopOver using UpdatePopOver
+  function updatePopOver(cart){
+    var popStr = '<h6>This are your items in Cart</h6><div class="mx-2 my-2">';
+    var i=1;
+    for(var item in cart){
+      popStr = popStr + '<b>'+ i + '</b>.';
+      popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0,15)+ '... Qty: '+ cart[item][0] + '<br>';
+      i = i+1;
+    }
+    popStr=popStr +'</div><a href="/shop/checkout"><button class="btn btn-success mx-1">Checkout</button></a><button class="btn btn-outline-danger mx-1" onclick="clearCart()">Clear Cart</button> ';
+    document.getElementById('popCart').setAttribute('data-content', popStr);
+    $('#popCart').popover();
+    
+  }
+
+  // Popover of Product Description
+  $(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+
+  });
+
+</script>
+
+{% endblock %}
+  
+

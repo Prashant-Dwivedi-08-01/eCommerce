@@ -1,0 +1,78 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %} My Awesome Cart {% endblock %}
+{% block css %}
+<style>
+.top_margin{
+    margin-top: 50px;
+}
+</style>
+{% endblock %}
+
+{% block body%}
+<!-- The name of this product is {{product.product_name}} -->
+<div class="container">
+    <div class="row">
+
+        <!-- IMAGE -->
+        <div class="col-md-4 my-5 ">
+            <div class="row">
+                <img src="/media/{{product.image}}" alt="{{product.product_name}}" height="400px" width="400px">
+            </div>
+            <div class="row">
+                <button class="btn btn-primary mx-3 top_margin">Buy Now</button>
+                <button class="btn btn-primary mx-5 top_margin">Add to Cart</button>
+            </div>
+        </div>
+        <!-- DESCRIPTION -->
+        <div class="col-md-6 mx-5 my-5">
+            <h2>{{product.product_name}}</h2>
+            <span><b>Rs {{product.price}}</b></span>
+            <p>{{product.desc}}</p>
+        </div>
+    </div>
+</div>
+{%endblock%}
+{% block js %}
+
+<script>
+
+  console.log("Working");
+  //Loading Local Storage
+  if (localStorage.getItem('cart') == null) {
+    var cart = {};
+  }
+  else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    key = Object.keys(cart)
+    total = 0;
+    for(let i =0; i<key.length; i++){
+      total = total + cart[key[i]];
+    }
+    document.getElementById('cart').innerHTML = total
+  }
+
+
+  function giveId(x) {
+    product_id = x;
+    if (cart[product_id] != undefined) {
+      cart[product_id] = cart[product_id] + 1;
+    }
+    else {
+      cart[product_id] = 1;
+    }
+    localStorage.setItem("cart", JSON.stringify(cart))
+    console.log(cart);
+    document.getElementById('cart').innerHTML = Object.keys(cart).length; //Object.keys() method is used to return an array whose elements are strings corresponding to the enumerable properties found directly upon an object.
+
+  }
+  //Activating the Popover of cart using Jquery from bootstrap website
+  $('#popCart').popover();
+  $('.popover-dismiss').popover({
+    trigger: 'focus'
+  })
+  document.getElementById('popCart').setAttribute('data-content', '<h6>This are your items in Cart</h6>');
+
+</script>
+
+{% endblock %}
